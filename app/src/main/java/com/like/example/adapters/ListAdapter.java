@@ -3,18 +3,14 @@ package com.like.example.adapters;
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.like.LikeButton;
-import com.like.example.R;
+import com.like.example.databinding.ListRowBinding;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by joel on 3/3/18.
@@ -43,9 +39,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.list_row, parent, false);
-
-        return new ListViewHolder(view);
+        // Inflate the layout using View Binding
+        ListRowBinding binding = ListRowBinding.inflate(LayoutInflater.from(activity), parent, false);
+        return new ListViewHolder(binding);
     }
 
     @Override
@@ -68,14 +64,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
 
     static class ListViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.title)
         TextView title;
-        @BindView(R.id.star_button)
         LikeButton starButton;
 
-        ListViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
+        ListViewHolder(ListRowBinding binding) {
+            super(binding.getRoot());
+
+            title = binding.title;
+            starButton = binding.starButton;
         }
     }
 }

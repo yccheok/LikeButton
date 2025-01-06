@@ -5,21 +5,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
 import com.like.example.adapters.ListAdapter;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.like.example.databinding.ActivityListBinding;
 
 public class ListActivity extends AppCompatActivity {
 
-    @BindView(R.id.list_view)
     RecyclerView listView;
     private ListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
-        ButterKnife.bind(this);
+
+        // Initialize View Binding
+        ActivityListBinding binding = ActivityListBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        listView = binding.listView;
 
         adapter = new ListAdapter(this);
         listView.setAdapter(adapter);

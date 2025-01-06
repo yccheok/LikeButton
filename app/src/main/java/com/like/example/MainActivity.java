@@ -13,34 +13,38 @@ import android.widget.Toast;
 import com.like.LikeButton;
 import com.like.OnAnimationEndListener;
 import com.like.OnLikeListener;
+import com.like.example.databinding.ActivityMainBinding;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class MainActivity extends AppCompatActivity implements OnLikeListener,
     OnAnimationEndListener {
 
     public static final String TAG = "MainActivity";
 
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.star_button)
     LikeButton starButton;
-    @BindView(R.id.heart_button)
     LikeButton likeButton;
-    @BindView(R.id.thumb_button)
     LikeButton thumbButton;
-    @BindView(R.id.smile_button)
     LikeButton smileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+
+        // Initialize View Binding
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        toolbar = binding.toolbar;
+        starButton = binding.contentMain.starButton;
+        likeButton = binding.contentMain.heartButton;
+        thumbButton = binding.contentMain.thumbButton;
+        smileButton = binding.contentMain.smileButton;
+
+        binding.contentMain.button.setOnClickListener(v -> {
+            navigateToList();
+        });
+
         setSupportActionBar(toolbar);
 
         starButton.setOnAnimationEndListener(this);
@@ -106,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements OnLikeListener,
         Log.d(TAG, "Animation End for %s" + likeButton);
     }
 
-    @OnClick(R.id.button)
     public void navigateToList()
     {
         Intent intent = new Intent(this,ListActivity.class);
